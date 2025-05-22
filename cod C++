@@ -111,7 +111,7 @@ void populeaza() /// Generează populația inițială de cromozomi
     for (int i=0;i<nrCromzi;i++)
     {
         cromozomi.emplace_back(); /// Adaugă un cromozom nou, implicit
-        cromozomi.back().x = st+ (dr-st)*random01();  /// Atribuie o valoare x aleatoare în intervalul [st, dr]
+        cromozomi.back().x=st+(dr-st)*random01();  /// Atribuie o valoare x aleatoare în intervalul [st, dr]
         cromozomi.back().valFunc=functie(cromozomi.back().x); /// Evaluam funcția in punctul x
 
         pair<long long, string> bin=binar(cromozomi.back().x); /// Obține indexul intervalului și reprezentarea binară
@@ -146,9 +146,9 @@ void selectCromozomi(bool conditie)
     for (int i=0;i<nrCromzi-1;i++) ///selectez aleatoriu nrCromozomi - 1 cromozomi, deoarece cromozomul cu f(x) maxim este luat cel putin o data oricum;de asemenea, cromozomul elitist va fi mereu cel putin pe pozitia nrCromozomi - 1
     {
         float u=random01(); /// Cromozomul cu f(x) maxim va fi adăugat oricum separat (elitism)
-        int indexCromozom = BinarySearch(0,nrCromzi-1,u);  /// Găsim cromozomul corespunzător în intervalul de selecție
+        int indexCromozom=BinarySearch(0,nrCromzi-1,u);  /// Găsim cromozomul corespunzător în intervalul de selecție
         if (conditie)
-            g << "u=" <<u<<" selectam cromozomul " <<(indexCromozom+1)<< "\n";
+            g<<"u=" <<u<<" selectam cromozomul "<<(indexCromozom+1)<<"\n";
 
         copieCromozomi.emplace_back();  /// Adăugăm cromozomul selectat în copia populației
         ///setam valorile necesare
@@ -168,12 +168,12 @@ void selectCromozomi(bool conditie)
         }
     }
     if (conditie)
-        g<<"u="<<(SelectieInt[indexCromozomMaxim]+SelectieInt[indexCromozomMaxim + 1]) / 2 << " selectam cromozomul " << (indexCromozomMaxim + 1) << "\n";
+        g<<"u="<<(SelectieInt[indexCromozomMaxim]+SelectieInt[indexCromozomMaxim+1])/2<< " selectam cromozomul "<<(indexCromozomMaxim+1)<<"\n";
     copieCromozomi.emplace_back();
-    copieCromozomi.back().x = cromozomi[indexCromozomMaxim].x;
-    copieCromozomi.back().valFunc = cromozomi[indexCromozomMaxim].valFunc;
-    copieCromozomi.back().indexInterval = cromozomi[indexCromozomMaxim].indexInterval;
-    copieCromozomi.back().sir = cromozomi[indexCromozomMaxim].sir;
+    copieCromozomi.back().x=cromozomi[indexCromozomMaxim].x;
+    copieCromozomi.back().valFunc=cromozomi[indexCromozomMaxim].valFunc;
+    copieCromozomi.back().indexInterval=cromozomi[indexCromozomMaxim].indexInterval;
+    copieCromozomi.back().sir=cromozomi[indexCromozomMaxim].sir;
 
     cromozomi.clear(); ///refacem vectorul cromozomi cu cei selectati
     for (int i=0;i<nrCromzi;i++)
@@ -191,7 +191,7 @@ void selectCromozomi(bool conditie)
 void mutCromozomi(bool conditie)
 {
     if (conditie)
-        g << "\n\nProbabilitatea de mutatie pentru fiecare gena "<< probabilMut<<"\n\n";
+        g<<"\n\nProbabilitatea de mutatie pentru fiecare gena "<<probabilMut<<"\n\n";
 
     indCromMut.clear();
     for (int i=0;i<nrCromzi-1;i++) ///ultimul cromozom (indexul nrCromzi - 1) este cel elitist, ce trebuie trimis in urmatoarea generatie neschimbat
@@ -205,7 +205,7 @@ void mutCromozomi(bool conditie)
                 else
                     if (indCromMut.empty())
                         indCromMut.push_back(i);  // Adaugam primul cromozom care sufera mutatie daca lista este goala
-                cromozomi[i].sir[j] ^= 1; ///daca e 1, se face 0; daca e -, se face 1 -> XOR
+                cromozomi[i].sir[j]^=1; ///daca e 1, se face 0; daca e -, se face 1 -> XOR
             }
         }
         if (!indCromMut.empty() && indCromMut.back()==i)
@@ -217,7 +217,7 @@ void mutCromozomi(bool conditie)
         for (int i=0;i<indCromMut.size();i++)
             g<<(indCromMut[i]+1)<< "\n";  /// Afisam cromozomii care au fost modificati
     }
-    
+
     /*vector <pair<int,int>> geneSwapate; ///vom tine minte cromozomul si pozitia genei ca pereche
     int i,j,cr1,gn1,cr2,gn2; ///pentru swapare
     for (i=0;i<nrCromzi-1;i++)
@@ -251,16 +251,16 @@ void afisareCromozomi()
 {
     for (int i=0;i<nrCromzi;i++)
     {
-        g <<(i+1)<<": "<<cromozomi[i].sir<<" x= "<<cromozomi[i].x<<" f= "<<cromozomi[i].valFunc<<"\n";
+        g<<(i+1)<<": "<<cromozomi[i].sir<<" x= "<<cromozomi[i].x<<" f= "<<cromozomi[i].valFunc<<"\n";
     }
-    g << "\n";
+    g<<"\n";
 }
 
 /// Functie pentru a adauga solutia curenta;se gaseste cromozomul cu valoarea maxima a functiei si se adauga intr-o lista de solutii
 void adaugSol()
 {
-    float maximFunctie = cromozomi[0].valFunc;  /// Initializam maximul cu valoarea functiei primului cromozom
-    float punctMaximFunctie = cromozomi[0].x;
+    float maximFunctie=cromozomi[0].valFunc,  /// Initializam maximul cu valoarea functiei primului cromozom
+          punctMaximFunctie=cromozomi[0].x;
     for (int i=1;i<nrCromzi;i++)
     {
         if (cromozomi[i].valFunc>maximFunctie)   /// Daca gasim un cromozom cu o valoare mai mare a functiei
@@ -293,7 +293,7 @@ void recombCromozomi(bool conditie)
             g<<"\n";
     }
     if (conditie) /// Afisam ultimul cromozom (elitistul) care nu participa la recombinare
-        g<<nrCromzi<<": "<< cromozomi[nrCromzi - 1].sir << " u=" << 1.0 << "\n\n";
+        g<<nrCromzi<<": "<< cromozomi[nrCromzi-1].sir<<" u=" <<1.0<< "\n\n";
     if ((int)indCromRecomb.size()%2==1) ///daca avem numar impar de cromozomi selectati, atunci elimininam unul dintre ei
         indCromRecomb.pop_back();
     if (!indCromRecomb.empty())    /// Daca avem cromozomi selectati pentru recombinare, ii amestecam aleator
@@ -303,7 +303,7 @@ void recombCromozomi(bool conditie)
         int punct=(int)((random01())*indexBiti); /// Stabilim punctul de crossover aleatoriu
         if (conditie)
         {
-            g<<"Recombinare dintre cromozomul "<<(indCromRecomb[i]+1)<<" cu cromozomul "<<(indCromRecomb[i+1]+1)<< ":\n";
+            g<<"Recombinare dintre cromozomul "<<(indCromRecomb[i]+1)<<" cu cromozomul "<<(indCromRecomb[i+1]+1)<<":\n";
             g<<cromozomi[indCromRecomb[i]].sir<<" "<<cromozomi[indCromRecomb[i+1]].sir<<" punct  "<< punct<< "\n";
         }
         for (int j=0;j<punct;j++)  /// Interschimbam genele pana la punctul de crossover
@@ -351,9 +351,9 @@ void probabCromozomi(bool conditie)
 
 int main()
 {
-    f>>nrCromzi>> st>>dr>> x1>>x2>>x3>>x4>>x5>> precizie>> probabilRecomb>> probabilMut>> indexEtape;
-    indexBiti = ceil(log2((dr - st) * putere(10, precizie)));   /// Calculam numărul de biți necesari pentru reprezentarea intervalului [st, dr] cu precizia specificată
-    lungInterval = (dr - st) / (1ll << indexBiti); /// Calculam lungimea unui interval pentru fiecare cromozom pe baza numărului de biți
+    f>>nrCromzi>>st>>dr>>x1>>x2>>x3>>x4>>x5>>precizie>>probabilRecomb>>probabilMut>>indexEtape;
+    indexBiti=ceil(log2((dr-st)*putere(10,precizie)));   /// Calculam numărul de biți necesari pentru reprezentarea intervalului [st, dr] cu precizia specificată
+    lungInterval=(dr-st)/(1ll<<indexBiti); /// Calculam lungimea unui interval pentru fiecare cromozom pe baza numărului de biți
 
     g<<"Populatia initiala\n";
 
@@ -364,15 +364,15 @@ int main()
     probabCromozomi(1); /// Calculam probabilitatile de selectie pentru cromozomi si afisam detalii
 
     selectCromozomi(1);   /// Selectam cromozomi pentru selectie
-    g << "\nDupa selectie:\n";
+    g<<"\nDupa selectie:\n";
     afisareCromozomi();   /// Afisam cromozomii dupa selectie
 
     recombCromozomi(1);   /// Aplicam procesul de recombinare pe cromozomi
-    g << "\nDupa recombinare:\n";
+    g<<"\nDupa recombinare:\n";
     afisareCromozomi();   /// Afisam cromozomii dupa recombinare
 
     mutCromozomi(1);   /// Aplicam procesul de mutatie pe cromozomi
-    g << "\nDupa mutatie:\n";
+    g<<"\nDupa mutatie:\n";
     afisareCromozomi();   /// Afisam cromozomii dupa mutatie
 
     adaugSol();   /// Adaugam solutia curenta la solutii
@@ -388,12 +388,12 @@ int main()
         adaugSol(); /// Adaugam solutia curenta
     }
 
-    g << "Evolutia maximului\n";   /// Afisam evolutia maximului obtinut pe parcursul algoritmului
-    for (int i=0;i<solutii.size(); i++)
-        g << "x= "<< solutii[i].first << " f= "<< solutii[i].second << "\n";
-    g << "\n";
+    g<<"Evolutia maximului\n";   /// Afisam evolutia maximului obtinut pe parcursul algoritmului
+    for (int i=0;i<solutii.size();i++)
+        g<<"x= "<<solutii[i].first<<" f= "<<solutii[i].second<<"\n";
+    g<<"\n";
 
     f.close();
-    g.close(); ///Am terminat!!!!
+    g.close();
     return 0;
 }
