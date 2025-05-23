@@ -1,16 +1,3 @@
-///Algoritmul cauta maximul unei functii de gradul 2 intr-un interval [st,dr]
-///Cu o anumita precizie, folosing mecanisme inspirate din biologie
-///selectie, increucisare,mutatie pentru a evolua o populatie de solutii
-///(cromozomi) de-a lungul a mai multor generatii, a.i. sa gasim o valoare cat
-///mai mare pentru functia f(x)
-
-///Practic, se genereaza o populatie initiala aleatoare
-///Fiecare individ este evaluat (calcul f(x))
-///Facem selectia pe baza valorilor f(x)
-///Cromozomii selectati sunt incrucisati
-///Apare mutatia, ce are o anumita probabilitate sa se intample
-///Procesul se repeta intr-un anumit numar de etape specificat
-///Pastram evolutia valorii maxime de-a lungul generatiilor
 #include <iostream>
 #include <fstream>
 #include <cmath>
